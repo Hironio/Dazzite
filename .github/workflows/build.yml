@@ -144,7 +144,7 @@ jobs:
         id: push
         env:
           REGISTRY_USER: ${{ github.actor }}
-          REGISTRY_PASSWORD: ${{ GH_PAT }}
+          REGISTRY_PASSWORD: ${{ secrets.GH_PAT }}
         with:
           registry: ${{ env.IMAGE_REGISTRY }}
           image: ${{ env.IMAGE_NAME }}
