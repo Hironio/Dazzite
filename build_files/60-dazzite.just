@@ -3,23 +3,24 @@
 [group('Dazzite')]
 setup-dazzite:
     #!/usr/bin/bash
-    echo "--- Configurazione Dazzite in corso ---"
-    # 1. Abilitazione servizi
+    echo "--- Abilitazione Hardware e Virtualizzazione ---"
     sudo systemctl enable --now cups libvirtd avahi-daemon
-    # 2. Firewall Brother
     sudo firewall-cmd --permanent --add-service=mdns --add-service=ipp
     sudo firewall-cmd --reload
-    # 3. Sincronizzazione Flathub e Installazione
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org
+    
+    echo "--- Sincronizzazione Catalogo App ---"
+    # Aggiorna solo l'indice, senza aggiungere repo che ci sono già
     flatpak update --appstream
-    echo "--- Installazione Applicazioni Flatpak ---"
+    
+    echo "--- Installazione Applicazioni ---"
+    # Installiamo a livello di sistema (default su Bazzite)
     flatpak install -y flathub \
         org.libreoffice.LibreOffice \
         org.keepassxc.KeePassXC \
         com.spotify.Client \
         eu.betterbird.Betterbird \
         org.torproject.torbrowser-launcher
-    # 4. Forzare localizzazione Italiana per LibreOffice
-    echo "--- Configurazione Lingua Italiana ---"
-    flatpak config --user --set languages "it;en"
+    
+    echo "--- Localizzazione Italiana ---"
+    flatpak config --set languages "it;en"
     flatpak update -y
