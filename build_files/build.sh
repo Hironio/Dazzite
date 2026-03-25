@@ -29,3 +29,8 @@ dnf5 install -y \
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+
+# Abilita i comandi magici SysRq (REISUB)
+mkdir -p /usr/lib/sysctl.d/
+echo "kernel.sysrq = 1" > /usr/lib/sysctl.d/99-reisub.conf
+
