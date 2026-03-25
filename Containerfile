@@ -38,8 +38,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/build.sh
 
 # --- AGGIUNTA DAZZITE: Risolve l'errore "recipe not found" ---
-# Copia la ricetta ujust dal contesto di build al sistema finale
+
+# 1. Copia il file dallo stage ctx (che punta a build_files/) al sistema
 COPY --from=ctx /60-dazzite.just /usr/share/ublue-os/just/60-dazzite.just
+
+# 2. Registra la ricetta nel catalogo ufficiale ujust (Import)
+RUN echo 'import "/usr/share/ublue-os/just/60-dazzite.just"' >> /usr/share/ublue-os/just/80-bazzite.just
 # -----------------------------------------------------------
 
 ### LINTING
