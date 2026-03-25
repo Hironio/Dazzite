@@ -36,7 +36,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh
-    
+
+# --- AGGIUNTA DAZZITE: Risolve l'errore "recipe not found" ---
+# Copia la ricetta ujust dal contesto di build al sistema finale
+COPY --from=ctx /60-dazzite.just /usr/share/ublue-os/just/60-dazzite.just
+# -----------------------------------------------------------
+
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
