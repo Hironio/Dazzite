@@ -319,25 +319,3 @@ format:
     /usr/bin/find . -iname "*.sh" -type f -exec shfmt --write "{}" ';'
 
     # --- SEZIONE DAZZITE POST-INSTALL ---
-
-# Configurazione completa Dazzite: Abilita servizi e installa applicazioni Flatpak
-[group('Dazzite')]
-setup-dazzite:
-    #!/usr/bin/bash
-    echo "Configurazione Dazzite: Abilitazione Servizi Hardware..."
-    sudo systemctl enable --now cups libvirtd avahi-daemon
-    
-    echo "Configurazione Dazzite: Apertura Firewall per Brother MFC..."
-    sudo firewall-cmd --permanent --add-service=mdns --add-service=ipp
-    sudo firewall-cmd --reload
-    
-    echo "Configurazione Dazzite: Installazione Applicazioni Flatpak Scelte..."
-    # Installazione batch: Produttività, Password, Musica, Email e Privacy
-    flatpak install -y flathub \
-        it.libreoffice.LibreOffice \
-        org.keepassxc.KeePassXC \
-        com.spotify.Client \
-        eu.betterbird.Betterbird \
-        org.torproject.torbrowser-launcher
-    
-    echo "Dazzite è ufficialmente pronta! Troverai tutto nel menu di KDE."
